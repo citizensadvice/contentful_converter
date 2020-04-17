@@ -18,12 +18,30 @@ describe ContentfulConverter::NodeBuilder do
       end
 
       context 'when we pass in header nokogiri nodes' do
-        it 'instantiates a Header rich_text node' do
-          %w[h1 h2 h3 h4 h5 h6].each do |v|
-            allow(nokogiri_node).to receive(:name) { v }
+        context 'when no modifier is passed in' do
+          it 'instantiates a Header rich_text node' do
+            %w[h1 h2 h3 h4 h5 h6].each do |v|
+              allow(nokogiri_node).to receive(:name) { v }
 
-            expect(described_class.build(nokogiri_node))
-              .to be_an_instance_of(ContentfulConverter::Nodes::Header)
+              expect(described_class.build(nokogiri_node))
+                .to be_an_instance_of(ContentfulConverter::Nodes::Header)
+            end
+          end
+        end
+
+        context 'when a force_header_size modifier is passed in' do
+          let(:heading_size) { "3" }
+          before do
+            allow(ContentfulConverter).to receive(:modifiers).and_return({ force_header_size: heading_size })
+          end
+
+          it "instantiates a Header rich_text node with the correct header size" do
+            %w[h1 h2 h3 h4 h5 h6].each do |v|
+              allow(nokogiri_node).to receive(:name) { v }
+
+              expect(described_class.build(nokogiri_node).node_type)
+                .to eq("heading-#{heading_size}")
+            end
           end
         end
       end

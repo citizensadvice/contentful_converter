@@ -16,7 +16,7 @@ module ContentfulConverter
       end
 
       def header_size
-        nokogiri_node.name.split('h').last
+        ContentfulConverter.modifiers[:force_header_size] || nokogiri_node.name.split('h').last
       end
     end
   end
