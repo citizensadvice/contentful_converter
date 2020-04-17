@@ -54,6 +54,34 @@ ContentfulConverter.configure do |config|
 end
 ```
 
+**Modifiers**
+
+Optional parameter to overwrite existing rules. Must be a hash.
+
+```ruby
+ContentfulConverter.convert('<h3>hello world</h3>', { force_header_size: "1" })
+
+# OUTPUT
+{
+  :nodeType=>"document",
+  :data=>{},
+  :content=>[
+    {
+      :nodeType=>"heading-1",
+      :data=>{},
+      :content=>[
+        {
+          :marks=>[],
+          :value=>"hello world",
+          :nodeType=>"text",
+          :data=>{}
+        }
+      ]
+    }
+  ]
+}
+```
+
 **`<a>`**
 
 * HTML hyperlinks with full URL e.g: (`<a href="https://google.com"></a>`), will be converted into URL hyperlinks
