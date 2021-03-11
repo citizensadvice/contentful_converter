@@ -57,6 +57,8 @@ module ContentfulConverter
 
       def normalize_embeds(nokogiri_fragment)
         find_nodes(nokogiri_fragment, 'p embed').each do |embed_node|
+          next if embed_node.to_s.include?("inline")
+
           embed_node.parent.add_next_sibling(embed_node)
         end
       end

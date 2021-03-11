@@ -7,7 +7,8 @@ module ContentfulConverter
     class Embed < Hyperlink
       EMBED_VALUES = {
         asset: 'embedded-asset-block',
-        entry: 'embedded-entry-block'
+        entry: 'embedded-entry-block',
+        inline: 'embedded-entry-inline'
       }.freeze
 
       def needs_p_wrapping?
@@ -21,7 +22,11 @@ module ContentfulConverter
       end
 
       def options
-        hyperlink_entry_option(type_value.to_s.capitalize)
+        if type_value == "inline"
+          hyperlink_entry_option("Entry")
+        else
+          hyperlink_entry_option(type_value.to_s.capitalize)
+        end
       end
 
       def type_value

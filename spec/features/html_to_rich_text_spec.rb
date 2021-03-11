@@ -383,6 +383,35 @@ describe ContentfulConverter::Converter do
             end
           end
 
+          context 'when it is an inline entry' do
+            let(:html) { '<embed src="2vtrc4TqIHNjolX299pik7" type="inline"/>' }
+            let(:expected_hash) do
+              {
+                nodeType: 'document',
+                data: {},
+                content: [
+                  {
+                    data: {
+                      target: {
+                        sys: {
+                          id: '2vtrc4TqIHNjolX299pik7',
+                          type: 'Link',
+                          linkType: 'Entry'
+                        }
+                      }
+                    },
+                    content: [],
+                    nodeType: 'embedded-entry-inline'
+                  }
+                ]
+              }
+            end
+
+            it 'creates an embedded entry block with the src as an ID' do
+              expect(described_class.convert(html)).to eq expected_hash
+            end
+          end
+
           context 'when it is an asset' do
             let(:html) { '<embed src="2vtrc4TqIHNjolX299pik7" type="asset"/>' }
             let(:expected_hash) do
