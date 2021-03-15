@@ -106,7 +106,7 @@ describe ContentfulConverter::Converter do
         context 'When the link has protocol e.g http(s)' do
           context 'When the host is citizensadvice.org.uk' do
             let(:html) do
-              '<html><body><a href="https://citizensadvice.org.uk/mypage">click me</a></body></html>'
+              '<html><body><a href="https://www.citizensadvice.org.uk/mypage">click me</a></body></html>'
             end
             let(:expected_hash) do
               {
