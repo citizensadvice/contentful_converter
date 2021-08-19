@@ -182,6 +182,44 @@ describe ContentfulConverter::Converter do
         end
 
         context 'when the link does not have a protocol' do
+          context 'when an internal link' do
+            let(:html) do
+              '<html><body><a href="/advisernet/law-and-courts/legal-aid/what-is-civil-legal-aid/">click me</a></body></html>'
+            end
+            let(:expected_hash) do
+              {
+                nodeType: "document",
+                data: {},
+                content: [
+                  {
+                    nodeType: "paragraph",
+                    data: {},
+                    content: [
+                      {
+                        data: {
+                          uri: "/advisernet/law-and-courts/legal-aid/what-is-civil-legal-aid/"
+                        },
+                        nodeType: "hyperlink",
+                        content: [
+                          {
+                            value: "click me",
+                            marks: [],
+                            nodeType: "text",
+                            data: {}
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            end
+
+            it "creates a hyperlink" do
+              expect(described_class.convert(html)).to eq expected_hash
+            end
+          end
+
           context 'when the link does not contain a hash' do
             let(:html) do
               '<html><body><a href="12398sadkcw">hyperlink entry</a></body></html>'
@@ -315,30 +353,24 @@ describe ContentfulConverter::Converter do
           end
           let(:expected_hash) do
             {
-              nodeType: 'document',
+              nodeType: "document",
               data: {},
               content: [
                 {
-                  nodeType: 'paragraph',
+                  nodeType: "paragraph",
                   data: {},
                   content: [
                     {
-                      nodeType: 'entry-hyperlink',
                       data: {
-                        target: {
-                          sys: {
-                            id: "",
-                            type: 'Link',
-                            linkType: 'Entry'
-                          }
-                        }
+                        uri: ""
                       },
+                      nodeType: "hyperlink",
                       content: [
                         {
-                          data: {},
+                          value: "click",
                           marks: [],
-                          value: 'click',
-                          nodeType: 'text'
+                          nodeType: "text",
+                          data: {}
                         }
                       ]
                     }
@@ -348,7 +380,7 @@ describe ContentfulConverter::Converter do
             }
           end
 
-          it 'creates an entry hyperlink with nil ID' do
+          it 'creates a hyperlink with an empty uri' do
             expect(described_class.convert(html)).to eq expected_hash
           end
         end
