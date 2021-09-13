@@ -28,9 +28,9 @@ describe ContentfulConverter::NokogiriBuilder do
 
       context 'when the list has multiple p children' do
         let(:html) { '<ol><li><p>testing</p><p>test2</p></li></ol>' }
-        let(:expected_html) { "<ol><li><p>testing test2 </p></li></ol>" }
+        let(:expected_html) { "<ol><li><p>testingtest2</p></li></ol>" }
 
-        it 'wraps the children in a single p element and adds spaces' do
+        it 'wraps the children in a single p element' do
           result = described_class.build(html)
           expect(result.to_html).to eq(expected_html)
         end
@@ -38,9 +38,9 @@ describe ContentfulConverter::NokogiriBuilder do
 
       context 'when the list has multiple mixed children' do
         let(:html) { '<ol><li><p>test</p><u>test2</u><i>test2</i></li></ol>' }
-        let(:expected_html) { "<ol><li><p>test <u>test2 </u><i>test2 </i></p></li></ol>" }
+        let(:expected_html) { "<ol><li><p>test<u>test2</u><i>test2</i></p></li></ol>" }
 
-        it 'wraps the children in a single p element and adds spaces' do
+        it 'wraps the children in a single p element' do
           result = described_class.build(html)
           expect(result.to_html).to eq(expected_html)
         end

@@ -77,20 +77,11 @@ module ContentfulConverter
         return if node.children.count == 1 && node.children.first.name == 'p'
 
         find_nodes(node, 'p').each { |p_node| p_node.swap(p_node.children) }
-        node_children = append_space_to_text_nodes(node.children.remove, node)
+        node_children = node.children.remove
 
         node.add_child('<p>')
         node.at_css('p').children = node_children
         merge_text_nodes(node)
-      end
-
-      def append_space_to_text_nodes(children, node)
-        children.each do |child|
-          next if child.text.chomp.empty? || child.text.end_with?(' ')
-
-          child.content = create_text_node("#{child.text} ", node)
-        end
-        children
       end
 
       def find_nodes(html_node, element)
