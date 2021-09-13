@@ -27,10 +27,6 @@ module ContentfulConverter
         hyperlink_option
       end
 
-      def hyperlink_option
-        { data: { uri: parsed_link.to_s } }
-      end
-
       def hyperlink_entry_option(type)
         {
           data: {
