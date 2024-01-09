@@ -6,7 +6,7 @@ require 'uri'
 module ContentfulConverter
   module Nodes
     class Hyperlink < Base
-      SECTIONS = %w[family immigration debt-and-money law-and-courts consumer benefits health housing work about-us resources intranet]
+      SECTIONS = %w[family immigration debt-and-money law-and-courts consumer benefits health housing work about-us resources intranet addresses]
       private
 
       def type
