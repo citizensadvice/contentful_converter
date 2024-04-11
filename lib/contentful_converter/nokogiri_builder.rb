@@ -71,12 +71,14 @@ module ContentfulConverter
       # Contentful's JSON representation of a table does not have an equivalent node for thead and tbody
       # So we can move the child trs up into the table element and then process the nodes normally
       def move_trs(nokogiri_fragment)
-        table = find_nodes(nokogiri_fragment, 'table').first
+        tables = find_nodes(nokogiri_fragment, 'table')
 
-        return if table.nil?
+        return if tables.nil?
 
-        move_trs_out_of_container('thead', table)
-        move_trs_out_of_container('tbody', table)
+        tables.each do |table|
+          move_trs_out_of_container('thead', table)
+          move_trs_out_of_container('tbody', table)
+        end
       end
 
       def move_trs_out_of_container(container, table_node)

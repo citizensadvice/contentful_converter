@@ -134,5 +134,55 @@ describe ContentfulConverter::Converter do
         expect(described_class.convert(html)).to eq expected_hash
       end
     end
+
+
+    context 'when there are two tables' do
+      let(:html) { '<table><tbody><tr><td><p>Content in a table data cell.</p></td></tr></tbody></table><p>Another table:</p><table><tbody><tr><td><p>Content in a table data cell.</p></td></tr></tbody></table>' }
+      let(:expected_hash) do
+        {:nodeType=>"document",
+        :data=>{},
+        :content=>
+         [{:nodeType=>"table",
+           :data=>{},
+           :content=>
+            [{:nodeType=>"table-row",
+              :data=>{},
+              :content=>
+               [{:nodeType=>"table-cell",
+                 :data=>{},
+                 :content=>
+                  [{:nodeType=>"paragraph",
+                    :data=>{},
+                    :content=>
+                     [{:value=>"Content in a table data cell.",
+                       :marks=>[],
+                       :nodeType=>"text",
+                       :data=>{}}]}]}]}]},
+          {:nodeType=>"paragraph",
+           :data=>{},
+           :content=>
+            [{:value=>"Another table:", :marks=>[], :nodeType=>"text", :data=>{}}]},
+          {:nodeType=>"table",
+           :data=>{},
+           :content=>
+            [{:nodeType=>"table-row",
+              :data=>{},
+              :content=>
+               [{:nodeType=>"table-cell",
+                 :data=>{},
+                 :content=>
+                  [{:nodeType=>"paragraph",
+                    :data=>{},
+                    :content=>
+                     [{:value=>"Content in a table data cell.",
+                       :marks=>[],
+                       :nodeType=>"text",
+                       :data=>{}}]}]}]}]}]}
+      end
+
+      it 'converts the table correctly' do
+        expect(described_class.convert(html)).to eq expected_hash
+      end
+    end
   end
 end
