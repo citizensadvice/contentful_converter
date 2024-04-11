@@ -142,5 +142,33 @@ describe ContentfulConverter::Converter do
         end
       end
     end
+
+    context 'when there is a table body element' do
+      let(:html) { '<table><tbody><tr><td><p>Content in a table data cell.</p></td></tr></tbody></table>' }
+      let(:expected_hash) do
+        {
+          nodeType: 'document',
+          data: {},
+          content: [{:content=>[{:content=>[{:content=>[{:content=>[{:data=>{}, :marks=>[], :nodeType=>"text", :value=>"Content in a table data cell."}], :data=>{}, :nodeType=>"paragraph"}], :data=>{}, :nodeType=>"table-cell"}], :data=>{}, :nodeType=>"table-row"}], :data=>{}, :nodeType=>"table"}]
+        }
+      end
+
+      it 'converts the table correctly' do
+        expect(described_class.convert(html)).to eq expected_hash
+      end
+
+      context 'when there is no table body element' do
+        let(:html) { '<table><tr><td><p>Content in a table data cell.</p></td></tr></table>' }
+
+        it "converts the table correctly" do
+          expect(described_class.convert(html)).to eq expected_hash
+        end
+      end
+    end
+
   end
 end
+
+
+
+# ///// <a href="https://www.google.com">with a link</a>.
