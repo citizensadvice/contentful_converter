@@ -10,7 +10,6 @@ module ContentfulConverter
         @parent = parent
         @node_type = type
         @content = []
-        puts "Initialising #{type}"
       end
 
       def add_content(node)

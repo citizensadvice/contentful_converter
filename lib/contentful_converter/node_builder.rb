@@ -16,9 +16,9 @@ require 'contentful_converter/nodes/horizontal_line'
 require 'contentful_converter/nodes/list_item'
 require 'contentful_converter/nodes/hyperlink'
 require 'contentful_converter/nodes/tables/table'
-require 'contentful_converter/nodes/tables/table_head'
 require 'contentful_converter/nodes/tables/table_header'
 require 'contentful_converter/nodes/tables/table_row'
+require 'contentful_converter/nodes/tables/table_data'
 
 
 module ContentfulConverter
@@ -52,9 +52,9 @@ module ContentfulConverter
       'li' => Nodes::ListItem,
       'a' => Nodes::Hyperlink,
       'table' => Nodes::Tables::Table,
-      'thead' => Nodes::Tables::TableHead,
       'tr' => Nodes::Tables::TableRow,
-      'th' => Nodes::Tables::TableHeader
+      'th' => Nodes::Tables::TableHeader,
+      'td' => Nodes::Tables::TableData
     }.freeze
 
     def self.build(nokogiri_node, parent = nil)

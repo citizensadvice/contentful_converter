@@ -65,21 +65,28 @@ module ContentfulConverter
       end
 
       def normalize_tables(nokogiri_fragment)
-        move_trs_out_of_thead(nokogiri_fragment)
+        move_trs(nokogiri_fragment)
       end
 
-      # Contentful's JSON representation of a table does not have an equivalent node for table head
+      # Contentful's JSON representation of a table does not have an equivalent node for thead and tbody
       # So we can move it's children up into the table element and then process the nodes normally
-      def move_trs_out_of_thead(nokogiri_fragment)
+      def move_trs(nokogiri_fragment)
         table = find_nodes(nokogiri_fragment, 'table').first
 
         return if table.nil?
 
-        trs_in_thead = find_nodes(nokogiri_fragment, 'thead tr')
-        theads = find_nodes(nokogiri_fragment, 'thead')
-        theads.remove
-        table.prepend_child(trs_in_thead)
+        move_trs_out_of_container('thead', table)
+        move_trs_out_of_container('tbody', table)
+
       end
+
+      def move_trs_out_of_container(container, table_node)
+        trs = find_nodes(table_node, "#{container} tr")
+        containers = find_nodes(table_node, container)
+        containers.remove
+        table_node.prepend_child(trs)
+      end
+
 
       def remove_empty_links(html_node)
         find_nodes(html_node, 'a').each { |n| n.remove unless n['href'] }
