@@ -15,6 +15,11 @@ require 'contentful_converter/nodes/unordered_list'
 require 'contentful_converter/nodes/horizontal_line'
 require 'contentful_converter/nodes/list_item'
 require 'contentful_converter/nodes/hyperlink'
+require 'contentful_converter/nodes/tables/table'
+require 'contentful_converter/nodes/tables/table_header'
+require 'contentful_converter/nodes/tables/table_row'
+require 'contentful_converter/nodes/tables/table_data'
+
 
 module ContentfulConverter
   class NodeBuilder
@@ -45,7 +50,11 @@ module ContentfulConverter
       'ul' => Nodes::UnorderedList,
       'ol' => Nodes::OrderedList,
       'li' => Nodes::ListItem,
-      'a' => Nodes::Hyperlink
+      'a' => Nodes::Hyperlink,
+      'table' => Nodes::Tables::Table,
+      'tr' => Nodes::Tables::TableRow,
+      'th' => Nodes::Tables::TableHeader,
+      'td' => Nodes::Tables::TableData
     }.freeze
 
     def self.build(nokogiri_node, parent = nil)
