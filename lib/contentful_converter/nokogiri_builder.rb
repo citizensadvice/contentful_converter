@@ -85,7 +85,7 @@ module ContentfulConverter
         trs = find_nodes(table_node, "#{container} tr")
         containers = find_nodes(table_node, container)
         containers.remove
-        table_node.prepend_child(trs)
+        table_node.add_child(trs)
       end
 
 
