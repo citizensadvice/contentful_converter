@@ -137,7 +137,7 @@ describe ContentfulConverter::Converter do
 
 
     context 'when there are two tables' do
-      let(:html) { '<table><tbody><tr><td><p>Content in a table data cell.</p></td></tr></tbody></table><p>Another table:</p><table><tbody><tr><td><p>Content in a table data cell.</p></td></tr></tbody></table>' }
+      let(:html) { '<table><tbody><tr><td><p>Content in a table data cell first row.</p></td></tr></tbody></table><p>Another table:</p><table><tbody><tr><td><p>Content in a table data cell second row.</p></td></tr></tbody></table>' }
       let(:expected_hash) do
         {:nodeType=>"document",
         :data=>{},
@@ -154,7 +154,7 @@ describe ContentfulConverter::Converter do
                   [{:nodeType=>"paragraph",
                     :data=>{},
                     :content=>
-                     [{:value=>"Content in a table data cell.",
+                     [{:value=>"Content in a table data cell first row.",
                        :marks=>[],
                        :nodeType=>"text",
                        :data=>{}}]}]}]}]},
@@ -174,7 +174,7 @@ describe ContentfulConverter::Converter do
                   [{:nodeType=>"paragraph",
                     :data=>{},
                     :content=>
-                     [{:value=>"Content in a table data cell.",
+                     [{:value=>"Content in a table data cell second row.",
                        :marks=>[],
                        :nodeType=>"text",
                        :data=>{}}]}]}]}]}]}
