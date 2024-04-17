@@ -184,5 +184,14 @@ describe ContentfulConverter::Converter do
         expect(described_class.convert(html)).to eq expected_hash
       end
     end
+
+    context "when there are empty table cells" do
+      let(:html) { '<table><thead><tr><th></th></tr></thead><tbody><tr><td></td></tr></tbody></table>' }
+
+      it "adds an non-breaking space" do
+        puts described_class.convert(html)
+        expect(described_class.convert(html)).to be_present
+      end
+    end
   end
 end
